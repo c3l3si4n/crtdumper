@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log/slog"
+	"strings"
 	"sync"
 
 	ct "github.com/google/certificate-transparency-go"
@@ -13,7 +14,11 @@ func ProcessDomainsFromEntries(entries []ct.LogEntry) {
 	for _, entry := range entries {
 		if entry.X509Cert != nil {
 			for _, dnsName := range entry.X509Cert.DNSNames {
-				if dnsName != "flowers-to-the-world.com" {
+				if flags.hasSuffix != "" {
+					if strings.HasSuffix(dnsName, flags.hasSuffix) {
+						DomainToOutput(dnsName)
+					}
+				} else if !strings.HasSuffix(dnsName, "flowers-to-the-world.com") {
 					DomainToOutput(dnsName)
 				}
 			}
@@ -26,7 +31,11 @@ func ProcessDomainsFromEntriesIncludingPrecerts(entries []ct.LogEntry) {
 	for _, entry := range entries {
 		if entry.Precert != nil {
 			for _, dnsName := range entry.Precert.TBSCertificate.DNSNames {
-				if dnsName != "flowers-to-the-world.com" {
+				if flags.hasSuffix != "" {
+					if strings.HasSuffix(dnsName, flags.hasSuffix) {
+						DomainToOutput(dnsName)
+					}
+				} else if !strings.HasSuffix(dnsName, "flowers-to-the-world.com") {
 					DomainToOutput(dnsName)
 				}
 			}

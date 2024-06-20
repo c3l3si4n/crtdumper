@@ -21,12 +21,12 @@ type Flags struct {
 
 	// Options for normal operation
 	outputFilename  string
-	cacheFilename   string
-	loadCache       bool
+	resumeFilename  string
+	resume          bool
 	lookUpSizeFlag  uint64
 	operatorsToSkip arrayFlags
 	logsToSkip      arrayFlags
-	requirePostfix  string
+	hasSuffix       string
 	onlyOperator    string
 	onlyLog         string
 	includePrecert  bool
@@ -66,19 +66,19 @@ func init() {
 	flag.StringVar(&flags.appLogLevel, "loglevel", "INFO", "Application loglevel (INFO (default), DEBUG, ERROR, WARN)")
 
 	// Options for normal operation
-	var skipCache bool
-	flag.BoolVar(&skipCache, "no-cache", false, "Do not use chache (default false)")
-	flags.loadCache = !skipCache
+	var skipResume bool
+	flag.BoolVar(&skipResume, "no-resume", false, "Do not use chache (default false)")
+	flags.resume = !skipResume
 	flag.Uint64Var(&flags.lookUpSizeFlag, "num-entries", 20, "number of entries to query at once")
-	flag.StringVar(&flags.outputFilename, "output", "./output.log", "Output filename. Use - for stdout. (default ./output.log)")
-	flag.StringVar(&flags.cacheFilename, "cache-file", "./log-cache.json", "Cache filename (default ./log-cache.json)")
+	flag.StringVar(&flags.outputFilename, "output", "./log-output.log", "Output filename. Use - for stdout. (default ./output.log)")
+	flag.StringVar(&flags.resumeFilename, "resume", "./log-resume.json", "Resume filename (default ./log-resume.json)")
 
 	flag.Var(&flags.operatorsToSkip, "skip-operator", "URLs of operators to skip (can be repeated)")
 	flag.Var(&flags.logsToSkip, "skip-log", "URLs of logs to skip (can be repeated)")
 	flag.StringVar(&flags.onlyOperator, "only-operator", "", "Name of the only operator to process")
 	flag.StringVar(&flags.onlyLog, "only-log", "", "URL of the single log to process")
 	flag.BoolVar(&flags.includePrecert, "include-precert", false, "Include data from precertificates in output")
-	flag.StringVar(&flags.requirePostfix, "require-postfix", "", "Postfixe to require. (will not output domains not matching postfix)")
+	flag.StringVar(&flags.hasSuffix, "required-postfix", "", "Postfixe to require. (will not output domains not matching postfix)")
 
 	// List actions
 	flag.BoolVar(&flags.actionList, "list", false, "List something defined by operator/log/entry (default lists operators)")

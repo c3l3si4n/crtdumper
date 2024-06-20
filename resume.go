@@ -20,7 +20,7 @@ type MapCache struct {
 	Entries []CachedLogProgress `json:"entries"`
 }
 
-func SaveCache() {
+func SaveResume() {
 	serializedMap := MapCache{}
 	mep.ForEach(func(key string, value int) bool {
 		entry := CachedLogProgress{LogURL: key, Index: value}
@@ -29,7 +29,7 @@ func SaveCache() {
 		return true // return `true` to continue iteration and `false` to break iteration
 	})
 
-	file, err := os.OpenFile(flags.cacheFilename, os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(flags.resumeFilename, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		Abort(err.Error())
 	}
@@ -40,11 +40,11 @@ func SaveCache() {
 	}
 	file.Write(serialized)
 
-	slog.Info("Saved cache", "filename", flags.cacheFilename)
+	slog.Info("Saved cache", "filename", flags.resumeFilename)
 }
 
-func LoadCache() {
-	file, err := os.OpenFile(flags.cacheFilename, os.O_RDONLY, 0644)
+func LoadResume() {
+	file, err := os.OpenFile(flags.resumeFilename, os.O_RDONLY, 0644)
 	if err != nil {
 		return
 	}

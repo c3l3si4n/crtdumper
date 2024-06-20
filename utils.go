@@ -12,7 +12,7 @@ import (
 
 func Abort(msg string) {
 	slog.Warn(msg)
-	SaveCache()
+	SaveResume()
 	panic(msg)
 }
 

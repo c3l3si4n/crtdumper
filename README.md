@@ -6,7 +6,7 @@ CRTDumper is a Go application that massively scans Certificate Transparency (CT)
 
 - Fetches certificates from CT logs.
 - Extracts domain names from certificates.
-- Saves progress to a cache file for resuming.
+- Saves progress to a file for resuming.
 - Supports multithreading for faster processing.
 - Handles retries for transient network errors.
 
@@ -39,9 +39,14 @@ log entry (most useful for debugging)
 ./crtdumper -list -operator "Cloudflare" -log https://ct.cloudflare.com/logs/nimbus2025 --entry 38779142
 ```
 
-#### Write all domains from all active operator logs to ./output.log
+#### Write all domains from all active operator logs to ./log-output.log
 ```sh
 ./crtdumper
+```
+
+#### Write all domains from all active operator logs to stdout, limiting to the .no TLD, not resuming from previous runs
+```sh
+./crtdumper --output - --required-postfix ".no" -no-resume
 ```
 
 ### Command-line Flags
@@ -50,10 +55,10 @@ log entry (most useful for debugging)
         Output filename. Use - for stdout. (default ./output.log) (default "./output.log")
 - `-num-entries <number>`:
         number of entries to query at once (default 20)
-- `-no-cache`:
-        Do not use chache (default false, i.e. use cache)
-- `-cache-file string`:
-        Cache filename (default ./log-cache.json) (default "./log-cache.json")
+- `-no-resume`:
+        Do not use resume file (default false, i.e. use resume file)
+- `-resume-file string`:
+        Resume filename (default ./log-resume.json)
 
 #### Limiting output
 - `-require-postfix <string>`:
@@ -86,8 +91,8 @@ log entry (most useful for debugging)
 ## Handling Interruptions
 
 CRTDumper is designed to handle interruptions gracefully. If interrupted (e.g., by
-pressing `Ctrl+C`), it will save its state to `cache.json`  and print a message. 
-Unless you specify `-no-cache`, it will be reused automatically.
+pressing `Ctrl+C`), it will save its state to `log-resume.json` and print a message. 
+Unless you specify `-no-resume`, it will be used automatically.
 
 ## Issues and Contributions
 

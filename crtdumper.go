@@ -17,9 +17,9 @@ func main() {
 		doList(logList)
 	}
 
-	if flags.loadCache {
-		slog.Debug("Loading cache")
-		LoadCache()
+	if flags.resume {
+		slog.Debug("Loading resume data")
+		LoadResume()
 	}
 
 	var wg sync.WaitGroup
