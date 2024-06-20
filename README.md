@@ -16,6 +16,10 @@ CRTDumper is a Go application that massively scans Certificate Transparency (CT)
 go install github.com/Kagee/crtdumper@HEAD 
 ```
 
+## TODOs
+* Actually implement increasing sleep time on HTTP 429 Too Many Requests, Retry-After
+* Option for limiting the HTTP client to IPv4/IPv6 (some logs are dead/slow on IPv6?)
+
 ## Usage
 
 CRTDumper has two primary modes, dumping all dmains from one to multiple logs, and
