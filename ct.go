@@ -79,7 +79,7 @@ func CreateLogClient(log *ctLog.Log) *ctClient.LogClient {
 		}
 		if resp.StatusCode == 429 {
 			// TODO: *Actually* increase sleep?
-			slog.Warn("Got HTTP 429, increasing sleep for", "log", log.URL)
+			slog.Warn("Got HTTP 429, increasing sleep for", "log", log.URL, "headers", resp.Header)
 			return true, nil
 		}
 
