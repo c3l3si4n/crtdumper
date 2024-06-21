@@ -1,0 +1,5 @@
+crtdumper
+*.json
+*.log
+*.txt
+*.swp

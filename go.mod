@@ -10,18 +10,20 @@ require (
 )
 
 require (
+	github.com/go-logr/glogr v1.2.2 // indirect
+	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
-	github.com/mattn/go-runewidth v0.0.13 // indirect
-	github.com/rivo/uniseg v0.4.4 // indirect
-	golang.org/x/exp v0.0.0-20221031165847-c99f073a8326 // indirect
-	golang.org/x/sys v0.20.0 // indirect
+	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/rivo/uniseg v0.4.7 // indirect
+	golang.org/x/exp v0.0.0-20240613232115-7f521ea00fb8 // indirect
+	golang.org/x/sys v0.21.0 // indirect
 )
 
 require (
-	github.com/go-logr/logr v1.4.1 // indirect
+	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-resty/resty/v2 v2.13.1
-	golang.org/x/crypto v0.23.0 // indirect
-	golang.org/x/net v0.25.0 // indirect
-	google.golang.org/protobuf v1.34.1 // indirect
-	k8s.io/klog/v2 v2.120.1 // indirect
+	golang.org/x/crypto v0.24.0 // indirect
+	golang.org/x/net v0.26.0 // indirect
+	google.golang.org/protobuf v1.34.2 // indirect
+	k8s.io/klog/v2 v2.130.1 // indirect
 )
