@@ -13,7 +13,7 @@ CRTDumper is a Go application that massively scans Certificate Transparency (CT)
 ## Installation
 
 ```go
-go install github.com/Kagee/crtdumper@HEAD 
+go install github.com/c3l3si4n/crtdumper@HEAD
 ```
 
 ## TODOs
