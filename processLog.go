@@ -5,10 +5,14 @@ import (
 	"log/slog"
 	"strings"
 	"sync"
+	"sync/atomic"
 
 	ct "github.com/google/certificate-transparency-go"
 	ctLog "github.com/google/certificate-transparency-go/loglist3"
 )
+
+var totalProcessed uint64
+var currentlyProcessing bool
 
 func ProcessDomainsFromEntries(entries []ct.LogEntry) {
 	for _, entry := range entries {
@@ -79,8 +83,12 @@ func ProcessLog(wg *sync.WaitGroup, log *ctLog.Log, operator *ctLog.Operator) {
 		}
 
 		currentIndex += uint64(len(entries))
+		atomic.AddUint64(&totalProcessed, uint64(len(entries)))
+		if atomic.LoadUint64(&totalProcessed) >= 10000 {
+			SaveResume()
+			atomic.StoreUint64(&totalProcessed, 0)
+		}
 		mep.Set(log.URL, int(currentIndex))
-
 		//time.Sleep(550 * time.Millisecond)
 	}
 }
